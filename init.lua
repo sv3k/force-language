@@ -6,7 +6,14 @@
 local target_lang = "English"
 
 -- Specify the target app names here
-local target_apps = {"Sketch", "iTerm2", "IntelliJ IDEA", "Android Studio"}
+local target_apps = {
+  "Android Studio",
+  "IntelliJ IDEA",
+  "iTerm2",
+  "Sketch",
+  "WebStorm",
+  "Xcode"
+}
 
 function initForceLanguage()
   for id,name in pairs(hs.keycodes.layouts()) do 
@@ -29,8 +36,8 @@ function checkForceLanguage(name, event, app)
     return
   end
 
-  for id,name in pairs(target_apps) do 
-    if string.match(app:title(), name) then
+  for id,target_name in pairs(target_apps) do 
+    if string.match(name, target_name) then
       hs.keycodes.setLayout(target_lang)
       break
     end
