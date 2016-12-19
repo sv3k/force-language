@@ -15,6 +15,9 @@ local target_apps = {
   "Xcode"
 }
 
+-- Global variable to prevent GC, see https://github.com/Hammerspoon/hammerspoon/issues/681
+force_lang_watcher = nil
+
 function initForceLanguage()
   for id,name in pairs(hs.keycodes.layouts()) do 
     if string.match(name, target_lang) then
@@ -22,7 +25,7 @@ function initForceLanguage()
       break
     end
   end
-  hs.application.watcher.new(checkForceLanguage):start()
+  force_lang_watcher = hs.application.watcher.new(checkForceLanguage):start()
 end
 
 function checkForceLanguage(name, event, app)
